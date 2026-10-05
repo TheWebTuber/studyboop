@@ -1,0 +1,4 @@
+60a73e74d4b6685313fb92ea0c7cd5885727e21e3212aba3afc434c4f6cc8d7e  CampusBoop-v1.0-Linux-ARM64.zip
+57a54d5c17a7cb0d2638451110d03bfdf6d937988d79096f60ce50a38a96f410  CampusBoop-v1.0-Linux-x64.zip
+19697c395a6d56daf5adabb41608040c372b3a28f1272764260eca31e6d529a7  CampusBoop-v1.0-Windows-x64.zip
+e43a91710cab7ebbad15f176cb7ab73fecbd847bf6719eda82b7f52c4f46bca3  CampusBoop-v1.0-Source.zip
