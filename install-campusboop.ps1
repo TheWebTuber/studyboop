@@ -1,14 +1,13 @@
 $ErrorActionPreference = 'Stop'
-$Version = '1.0'
+$Version = '1.1'
 $BaseUrl = 'https://campusboop.creatorpromote.com'
 $Package = "CampusBoop-v$Version-Windows-x64.zip"
-$ExpectedSha = '19697c395a6d56daf5adabb41608040c372b3a28f1272764260eca31e6d529a7'
+$ExpectedSha = '8a343ab547498892994f0b69f712702a661cf94fea903c79cbd9a1ed026c1bfb'
 $InstallDir = Join-Path $env:LOCALAPPDATA 'Programs\CampusBoop'
-$BinDir = Join-Path $InstallDir 'bin'
-$CommandPath = Join-Path $BinDir 'campusboop.cmd'
+$OldBinDir = Join-Path $InstallDir 'bin'
 
 Write-Host "CampusBoop v$Version // Windows installer" -ForegroundColor Cyan
-if (-not [Environment]::Is64BitOperatingSystem) { throw 'CampusBoop v1.0 requires 64-bit Windows.' }
+if (-not [Environment]::Is64BitOperatingSystem) { throw 'CampusBoop v1.1 requires 64-bit Windows.' }
 
 $tmp = Join-Path ([IO.Path]::GetTempPath()) ('CampusBoop-' + [guid]::NewGuid().ToString('N'))
 $zip = Join-Path $tmp $Package
@@ -21,83 +20,27 @@ try {
     if ($actual -ne $ExpectedSha) { throw 'SHA-256 verification failed. Nothing was installed.' }
     Write-Host 'SHA-256 verified.' -ForegroundColor Green
 
-    # Stop a running CampusBoop PowerShell helper before replacing app files.
+    # Stop CampusBoop before replacing app files.
     Get-CimInstance Win32_Process -Filter "Name = 'powershell.exe'" -ErrorAction SilentlyContinue |
         Where-Object { $_.CommandLine -and $_.CommandLine -match 'SchoolCheckIn\.ps1' } |
         ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }
+    Stop-Process -Name 'SchoolLogin' -Force -ErrorAction SilentlyContinue
 
     Expand-Archive -LiteralPath $zip -DestinationPath $extract -Force
     $source = Join-Path $extract 'CampusBoop'
     if (-not (Test-Path (Join-Path $source 'CampusBoop.exe'))) { throw 'The downloaded package does not contain CampusBoop.exe.' }
 
-    if (Test-Path $InstallDir) { Remove-Item -LiteralPath $InstallDir -Recurse -Force }
-    New-Item -ItemType Directory -Force -Path $InstallDir,$BinDir | Out-Null
-    Copy-Item -Path (Join-Path $source '*') -Destination $InstallDir -Recurse -Force
-
-    @'
-@echo off
-setlocal
-set "ROOT=%LOCALAPPDATA%\Programs\CampusBoop"
-if /I "%~1"=="--uninstall" (
-  powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\uninstall.ps1"
-  exit /b %errorlevel%
-)
-if /I "%~1"=="--purge" (
-  powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%ROOT%\uninstall.ps1" -Purge
-  exit /b %errorlevel%
-)
-if /I "%~1"=="--help" (
-  echo CampusBoop v1.0
-  echo   campusboop                 Open CampusBoop
-  echo   campusboop --background    Start quietly in the background
-  echo   campusboop --help          Show this help
-  echo   campusboop --uninstall     Remove the app and keep settings
-  echo   campusboop --purge         Remove the app and local settings
-  echo Instructions: https://campusboop.creatorpromote.com/#instructions
-  exit /b 0
-)
-if not exist "%ROOT%\CampusBoop.exe" (
-  echo CampusBoop is not installed correctly. Reinstall from https://campusboop.creatorpromote.com
-  exit /b 1
-)
-start "" "%ROOT%\CampusBoop.exe" %*
-'@ | Set-Content -LiteralPath $CommandPath -Encoding ASCII
-
-    @'
-param([switch]$Purge)
-$ErrorActionPreference = 'SilentlyContinue'
-$root = Join-Path $env:LOCALAPPDATA 'Programs\CampusBoop'
-$data = Join-Path $env:LOCALAPPDATA 'SchoolCheckInHelper'
-$startup = [Environment]::GetFolderPath('Startup')
-$programs = [Environment]::GetFolderPath('Programs')
-Remove-Item -LiteralPath (Join-Path $startup 'CampusBoop.lnk') -Force
-Remove-Item -LiteralPath (Join-Path $programs 'CampusBoop.lnk') -Force
-Remove-Item -LiteralPath (Join-Path $startup 'School Check-in.lnk') -Force
-Get-CimInstance Win32_Process -Filter "Name = 'powershell.exe'" |
-    Where-Object { $_.CommandLine -and $_.CommandLine -match 'SchoolCheckIn\.ps1' } |
-    ForEach-Object { Stop-Process -Id $_.ProcessId -Force }
-Stop-Process -Name 'SchoolLogin' -Force
-$bin = Join-Path $root 'bin'
-$userPath = [Environment]::GetEnvironmentVariable('Path','User')
-$cleanPath = (($userPath -split ';' | Where-Object { $_ -and $_ -ne $bin }) -join ';')
-[Environment]::SetEnvironmentVariable('Path',$cleanPath,'User')
-if ($Purge) { Remove-Item -LiteralPath $data -Recurse -Force }
-$escaped = $root.Replace('"','""')
-Start-Process -WindowStyle Hidden -FilePath 'cmd.exe' -ArgumentList '/d','/c',("timeout /t 1 /nobreak >nul & rmdir /s /q `"$escaped`"")
-if ($Purge) { Write-Host 'CampusBoop and its local settings were removed.' }
-else {
-  Write-Host "CampusBoop removed. Your local settings were kept in: $data"
-  Write-Host 'Use campusboop --purge before uninstalling if you also want those settings erased.'
-}
-'@ | Set-Content -LiteralPath (Join-Path $InstallDir 'uninstall.ps1') -Encoding UTF8
-
-    # Add the command directory to the current user's PATH for future terminals.
+    # v1.0 created a terminal command. v1.1 intentionally keeps Windows simpler:
+    # installer command + Start Menu shortcut, with manual removal instructions.
     $userPath = [Environment]::GetEnvironmentVariable('Path','User')
-    $parts = @($userPath -split ';' | Where-Object { $_ })
-    if ($parts -notcontains $BinDir) {
-        $newPath = (($parts + $BinDir) -join ';')
-        [Environment]::SetEnvironmentVariable('Path',$newPath,'User')
+    if ($null -ne $userPath) {
+        $clean = (($userPath -split ';' | Where-Object { $_ -and $_.TrimEnd('\') -ne $OldBinDir.TrimEnd('\') }) -join ';')
+        if ($clean -ne $userPath) { [Environment]::SetEnvironmentVariable('Path',$clean,'User') }
     }
+
+    if (Test-Path $InstallDir) { Remove-Item -LiteralPath $InstallDir -Recurse -Force }
+    New-Item -ItemType Directory -Force -Path $InstallDir | Out-Null
+    Copy-Item -Path (Join-Path $source '*') -Destination $InstallDir -Recurse -Force
 
     # Start Menu shortcut.
     $programs = [Environment]::GetFolderPath('Programs')
@@ -111,16 +54,13 @@ else {
 
     Write-Host ''
     Write-Host 'CampusBoop is installed.' -ForegroundColor Green
-    Write-Host ''
-    Write-Host '  Start:       campusboop'
-    Write-Host '  Background:  campusboop --background'
-    Write-Host '  Help:        campusboop --help'
-    Write-Host '  Uninstall:   campusboop --uninstall'
-    Write-Host '  Full remove: campusboop --purge'
+    Write-Host 'The first-run setup is opening now.'
     Write-Host ''
     Write-Host "Instructions: $BaseUrl/#instructions" -ForegroundColor Cyan
-    Write-Host 'Open a new terminal before using the new campusboop command.' -ForegroundColor DarkGray
-    Write-Host "You can also start it now from: $InstallDir\CampusBoop.exe" -ForegroundColor DarkGray
+    Write-Host 'Later, open CampusBoop from Windows Search / Start Menu.' -ForegroundColor DarkGray
+    Write-Host 'Windows removal is manual; the website shows the exact steps.' -ForegroundColor DarkGray
+
+    Start-Process -FilePath (Join-Path $InstallDir 'CampusBoop.exe') -WorkingDirectory $InstallDir
 }
 finally {
     Remove-Item -LiteralPath $tmp -Recurse -Force -ErrorAction SilentlyContinue

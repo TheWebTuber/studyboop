@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-VERSION="1.0"
+VERSION="1.1"
 BASE_URL="https://campusboop.creatorpromote.com"
 INSTALL_DIR="${HOME}/.local/share/campusboop"
 BIN_DIR="${HOME}/.local/bin"
@@ -12,11 +12,11 @@ CONFIG_ROOT="${XDG_CONFIG_HOME:-${HOME}/.config}/campusboop"
 case "$(uname -m)" in
   x86_64|amd64)
     PACKAGE="CampusBoop-v${VERSION}-Linux-x64.zip"
-    EXPECTED_SHA="57a54d5c17a7cb0d2638451110d03bfdf6d937988d79096f60ce50a38a96f410"
+    EXPECTED_SHA="2f6778488413300778ad4bdd184be8fb2751626e2ee0b06388adc75c27f0139a"
     ;;
   aarch64|arm64)
     PACKAGE="CampusBoop-v${VERSION}-Linux-ARM64.zip"
-    EXPECTED_SHA="60a73e74d4b6685313fb92ea0c7cd5885727e21e3212aba3afc434c4f6cc8d7e"
+    EXPECTED_SHA="a2551e75360e8eb77fcf8aa5fe5c7cf33ac40a47a91243ac4748089915c7de33"
     ;;
   *)
     echo "CampusBoop: unsupported CPU architecture: $(uname -m)" >&2
@@ -131,7 +131,6 @@ Categories=Education;Utility;
 Icon=${INSTALL_DIR}/campusboop.png
 EOF2
 
-# Ensure future login shells know ~/.local/bin. This does not modify the parent shell running curl|bash.
 if [[ ":${PATH}:" != *":${BIN_DIR}:"* ]]; then
   touch "${HOME}/.profile"
   if ! grep -Fq 'export PATH="$HOME/.local/bin:$PATH"' "${HOME}/.profile"; then
@@ -151,4 +150,10 @@ printf '\033]8;;%s/#instructions\033\\Open CampusBoop instructions\033]8;;\033\\
 if [[ ":${PATH}:" != *":${BIN_DIR}:"* ]]; then
   printf '\nNote: ~/.local/bin was added to ~/.profile. Open a new terminal before using the short command.\n'
   printf 'You can start it right now with: %s\n' "$COMMAND_PATH"
+fi
+
+# First install should feel like an app install, not only a terminal command.
+# Open the first-run setup automatically on normal graphical Linux sessions.
+if [ -n "${DISPLAY:-}${WAYLAND_DISPLAY:-}" ]; then
+  nohup "$COMMAND_PATH" >/dev/null 2>&1 &
 fi
