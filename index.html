@@ -2,124 +2,144 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0a0b10">
-  <meta name="description" content="CampusBoop is a student-made check-in, commit and break reminder for HvA and UvA study workflows. Windows and Linux downloads.">
-  <title>CampusBoop | Student check-in & study reminder</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0d0d14">
+  <meta name="description" content="CampusBoop is an independent student-made check-in, checkout and study reminder for HvA and UvA students. Windows and Linux.">
+  <title>CampusBoop — student-made study helper</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
-  <header class="nav shell">
-    <a class="brand" href="#top" aria-label="CampusBoop home"><span class="logo">CB</span><span><strong>CampusBoop</strong><small>student-made study helper</small></span></a>
-    <nav><a href="#how">How it works</a><a href="#download">Download</a><a href="#instructions">Instructions</a></nav>
+  <header class="nav shell" id="top">
+    <a class="brand" href="#top" aria-label="CampusBoop home">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <span><strong>CampusBoop</strong><small>independent student project</small></span>
+    </a>
+    <nav aria-label="Main navigation">
+      <a href="#features">Features</a>
+      <a href="#download">Download</a>
+      <a href="#instructions">Instructions</a>
+      <a href="#privacy">Privacy</a>
+    </nav>
     <a class="nav-cta" href="#download">Get CampusBoop</a>
   </header>
 
-  <main id="top">
+  <main>
     <section class="hero shell">
       <div class="hero-copy">
-        <div class="kicker"><span class="dot hva"></span> HvA <span class="slash">/</span> <span class="dot uva"></span> UvA study workflow</div>
-        <h1>School reminders that feel like they belong in <span>this decade.</span></h1>
-        <p class="lede">Meet Boop: a lightweight helper for check-ins, commits, pushes and breaks. It stays out of the way, opens the school pages you configure, and can start with your computer.</p>
-        <div class="hero-actions"><a class="button primary" href="#download">Download v1.1</a><a class="button ghost" href="#instructions">See instructions</a></div>
-        <div class="trustline"><span>Free</span><span>No ads</span><span>Local settings</span><span>Windows + Linux</span></div>
+        <div class="school-line"><img src="assets/hva.svg" alt="Hogeschool van Amsterdam"><span>+</span><img src="assets/uva.svg" alt="Universiteit van Amsterdam"></div>
+        <p class="kicker">CHECK IN • SAVE YOUR WORK • CHECK OUT</p>
+        <h1>Small reminders.<br><span>Less school admin friction.</span></h1>
+        <p class="lede">CampusBoop keeps your school check-in links, student tools and work reminders close without trying to replace your browser or school portals.</p>
+        <div class="hero-actions"><a class="button primary" href="#download">Download v1.1.1</a><a class="button ghost" href="#instructions">How to use it</a></div>
+        <div class="trustline"><span>Windows x64</span><span>Linux x64</span><span>Linux ARM64</span><span>Free</span><span>Student-made</span></div>
       </div>
-      <div class="hero-card">
-        <div class="window-bar"><span></span><span></span><span></span><b>CampusBoop</b></div>
-        <div class="boop-row"><div class="boop-icon">B</div><div><strong>Boop — school check-in</strong><small>Working on school in VS Code?</small></div></div>
-        <button>✓ Already checked in today</button>
-        <button>↗ Open school login</button>
-        <div class="two"><button>Open Check-in 1</button><button>Open Check-in 2</button></div>
-        <div class="mini-status"><span class="ok">● reminders running</span><span>45 min commit / break</span></div>
+
+      <div class="app-preview" aria-label="CampusBoop interface preview">
+        <div class="preview-head"><strong>CampusBoop</strong><div class="preview-schools"><span>HvA</span><span>UvA</span></div></div>
+        <div class="preview-status">Today: not checked in yet</div>
+        <div class="preview-two"><button>I've checked in</button><button>I've checked out</button></div>
+        <button class="wide">Open school login</button>
+        <div class="preview-two"><button>Check-in 1</button><button>Check-in 2</button></div>
+        <div class="preview-two"><button>Not now — 15 min</button><button>Settings</button></div>
+        <p class="preview-label">Student tools</p>
+        <div class="preview-three"><button>Print</button><button>Top up</button><button>Library</button></div>
       </div>
     </section>
 
     <section class="independent shell">
-      <strong>Independent student project.</strong>
-      <p>CampusBoop is not made, endorsed, supported or distributed by Hogeschool van Amsterdam (HvA) or Universiteit van Amsterdam (UvA). School names are used only to explain which study workflow the tool is designed around.</p>
+      <strong>Not an official HvA/UvA app.</strong>
+      <p>CampusBoop is made independently by a student/ex-student. HvA and UvA do not build, endorse, support or distribute this project.</p>
     </section>
 
-    <section id="how" class="section shell">
-      <div class="section-head"><span>01 // WHAT IT DOES</span><h2>Less “did I forget something?”</h2><p>CampusBoop does not replace the school system. It helps you remember the steps around it.</p></div>
+    <section class="section shell" id="features">
+      <div class="section-head"><span>01 // WHAT IT DOES</span><h2>Useful when you need it. Quiet when you don't.</h2></div>
       <div class="feature-grid">
-        <article><b>01</b><h3>Check-in reminders</h3><p>Open your configured login and check-in pages without hunting through tabs or bookmarks.</p></article>
-        <article><b>02</b><h3>Commit + push Boops</h3><p>While you work in VS Code, Boop can remind you to protect your work with regular commits and pushes.</p></article>
-        <article><b>03</b><h3>Break reminders</h3><p>Take a ten-minute quiet period, resume early, or keep working. You control the pace.</p></article>
-        <article><b>04</b><h3>Daily checkout</h3><p>When you finish, mark yourself checked out locally and stop the reminders for the day.</p></article>
-        <article><b>05</b><h3>Your schedule</h3><p>Limit automatic reminders to selected weekdays and hours so Boop stays silent outside school time.</p></article>
-        <article><b>06</b><h3>Start with your PC</h3><p>Windows and Linux can both launch CampusBoop automatically, with an optional delayed check-in reminder after startup.</p></article>
-        <article><b>07</b><h3>Student tools</h3><p>Keep editable Print, Top up and Library shortcuts at the bottom of CampusBoop instead of hunting for the links again.</p></article>
+        <article><b>01</b><h3>Check-in & checkout</h3><p>Keep your own school links ready and mark your local CampusBoop status so reminders know when to stop.</p></article>
+        <article><b>02</b><h3>Startup reminder</h3><p>Optionally get one delayed reminder after signing in to your computer instead of an instant popup during boot.</p></article>
+        <article><b>03</b><h3>Smart VS Code reminder</h3><p>If you still have not checked in, CampusBoop can remind you when you actually start working in VS Code.</p></article>
+        <article><b>04</b><h3>Commit + break Boops</h3><p>Once you're checked in, optional work reminders help you remember commits, pushes and short breaks.</p></article>
+        <article><b>05</b><h3>Student tools</h3><p>Print, Top up and Library are ready at the bottom and remain fully editable for your own shortcuts.</p></article>
+        <article><b>06</b><h3>Flexible schedule</h3><p>Use a typical finish time or set your own weekly hours. CampusBoop resets the school day automatically.</p></article>
       </div>
-      <div class="callout"><strong>Important:</strong> CampusBoop opens the school pages, but it does <em>not</em> submit HvA/UvA check-in or checkout forms automatically. You still review and submit the actual school action yourself.</div>
+      <div class="callout"><strong>CampusBoop does not submit school forms for you.</strong> It opens the official pages and keeps local reminder status. You still review and submit the real HvA/UvA action yourself.</div>
     </section>
 
-    <section class="section shell steps">
-      <div class="section-head"><span>02 // QUICK SETUP</span><h2>Install. Configure. Boop.</h2></div>
-      <div class="step-list">
-        <div><i>1</i><h3>Install CampusBoop</h3><p>Download the Windows ZIP or use the one-command installer. Linux users can use one command that automatically selects x64 or ARM64.</p></div>
-        <div><i>2</i><h3>First-run setup</h3><p>Choose HvA or UvA, startup behavior, the startup reminder and smart VS Code check-in reminder. You can change everything later.</p></div>
-        <div><i>3</i><h3>Add your school links</h3><p>Set the school login/check-in links and optionally rename or replace the three Student tools links.</p></div>
-        <div><i>4</i><h3>Let Boop stay useful</h3><p>CampusBoop can run quietly at sign-in, remind you once after startup, then use smart VS Code detection if you still have not checked in.</p></div>
-      </div>
-    </section>
-
-    <section id="download" class="section shell">
-      <div class="section-head"><span>03 // DOWNLOAD</span><h2>Choose your build.</h2><p>Version 1.1. Linux packages are native, self-contained builds; both quick installers verify SHA-256 before installing.</p></div>
+    <section class="section shell" id="download">
+      <div class="section-head"><span>02 // DOWNLOAD</span><h2>One release. Three builds.</h2><p>Version 1.1.1. Linux quick install detects x64 or ARM64 automatically.</p></div>
       <div class="download-grid">
-        <article class="download-card featured"><div class="platform">⊞</div><div class="badge">MOST PCs</div><h3>Windows x64</h3><p>For normal 64-bit Windows 10/11 PCs using Intel or AMD processors.</p><a class="button primary full" href="downloads/CampusBoop-v1.1-Windows-x64.zip" download>Download Windows ZIP ↓</a><code>CampusBoop-v1.1-Windows-x64.zip</code></article>
-        <article class="download-card"><div class="platform">⌁</div><h3>Linux x64</h3><p>For most Linux desktops and laptops using 64-bit Intel or AMD processors.</p><a class="button ghost full" href="downloads/CampusBoop-v1.1-Linux-x64.zip" download>Download Linux x64 ↓</a><code>CampusBoop-v1.1-Linux-x64.zip</code></article>
-        <article class="download-card"><div class="platform">A64</div><h3>Linux ARM64</h3><p>For 64-bit ARM Linux devices, including many Raspberry Pi and ARM computers.</p><a class="button ghost full" href="downloads/CampusBoop-v1.1-Linux-ARM64.zip" download>Download Linux ARM64 ↓</a><code>CampusBoop-v1.1-Linux-ARM64.zip</code></article>
+        <article class="download-card featured">
+          <div class="platform">⊞</div><div class="badge">MOST PCs</div>
+          <h3>Windows x64</h3><p>Windows 10/11 on normal 64-bit Intel or AMD laptops and desktops.</p>
+          <a class="button primary full" href="downloads/CampusBoop-v1.1.1-Windows-x64.zip" download>Download Windows ZIP ↓</a>
+          <code>CampusBoop-v1.1.1-Windows-x64.zip</code>
+        </article>
+        <article class="download-card">
+          <div class="platform">⌁</div><h3>Linux x64</h3><p>Most 64-bit Linux computers using Intel or AMD processors.</p>
+          <a class="button ghost full" href="downloads/CampusBoop-v1.1.1-Linux-x64.zip" download>Download Linux x64 ↓</a>
+          <code>CampusBoop-v1.1.1-Linux-x64.zip</code>
+        </article>
+        <article class="download-card">
+          <div class="platform">A64</div><h3>Linux ARM64</h3><p>64-bit ARM Linux systems, including many ARM laptops and Raspberry Pi devices.</p>
+          <a class="button ghost full" href="downloads/CampusBoop-v1.1.1-Linux-ARM64.zip" download>Download Linux ARM64 ↓</a>
+          <code>CampusBoop-v1.1.1-Linux-ARM64.zip</code>
+        </article>
       </div>
 
 
+      
       <div class="installer-panel">
-        <div class="installer-copy"><span>LINUX QUICK INSTALL // RECOMMENDED</span><h3>One command. Correct build.</h3><p>Detects x64/ARM64, downloads the right ZIP, checks its SHA-256, installs for your user and creates the <code>campusboop</code> command.</p></div>
-        <div class="command-block"><div><b>INSTALL OR UPDATE</b><small>Linux terminal</small></div><pre><code>curl -fsSL https://campusboop.creatorpromote.com/install-campusboop.sh | bash</code></pre><button class="copy" data-copy="curl -fsSL https://campusboop.creatorpromote.com/install-campusboop.sh | bash">Copy</button></div>
+        <div class="installer-copy"><span>LINUX QUICK INSTALL</span><h3>One command automatically picks x64 or ARM64.</h3><p>The script verifies the matching release, installs it under your user account and creates the <code>campusboop</code> command.</p></div>
+        <div class="command-block"><div><b>TERMINAL</b><small>Install / update</small></div><pre><code>curl -fsSL https://campusboop.creatorpromote.com/install-campusboop.sh | bash</code></pre><button class="copy" data-copy="curl -fsSL https://campusboop.creatorpromote.com/install-campusboop.sh | bash">Copy</button></div>
         <div class="command-row">
           <div><b>START</b><code>campusboop</code><button class="copy tiny" data-copy="campusboop">Copy</button></div>
           <div><b>AUTO-START</b><code>campusboop --autostart-on</code><button class="copy tiny" data-copy="campusboop --autostart-on">Copy</button></div>
           <div><b>UNINSTALL</b><code>campusboop --uninstall</code><button class="copy tiny" data-copy="campusboop --uninstall">Copy</button></div>
-          <div><b>HELP</b><code>campusboop --help</code><button class="copy tiny" data-copy="campusboop --help">Copy</button></div>
+          <div><b>FULL REMOVE</b><code>campusboop --purge</code><button class="copy tiny" data-copy="campusboop --purge">Copy</button></div>
         </div>
       </div>
+
       
       <div class="installer-panel windows-panel">
-        <div class="installer-copy"><span>WINDOWS QUICK INSTALL // RECOMMENDED</span><h3>One PowerShell command.</h3><p>Downloads the Windows x64 release, verifies its SHA-256, installs it for your Windows account, creates the Start Menu shortcut and opens the first-run setup.</p></div>
-        <div class="command-block"><div><b>INSTALL OR UPDATE</b><small>Windows PowerShell</small></div><pre><code>irm https://campusboop.creatorpromote.com/install-campusboop.ps1 | iex</code></pre><button class="copy" data-copy="irm https://campusboop.creatorpromote.com/install-campusboop.ps1 | iex">Copy</button></div>
-        <p class="small muted" style="margin:14px 0 0">Windows removal is manual on purpose: no uninstall command is required. See the Windows removal steps below.</p>
+        <div class="installer-copy"><span>WINDOWS QUICK INSTALL</span><h3>Install or update with one PowerShell command.</h3><p>The installer downloads v1.1.1, verifies its SHA-256, installs it for your Windows account, adds a Start Menu shortcut and opens first-run setup.</p></div>
+        <div class="command-block"><div><b>POWERSHELL</b><small>Install / update</small></div><pre><code>irm https://campusboop.creatorpromote.com/install-campusboop.ps1 | iex</code></pre><button class="copy" data-copy="irm https://campusboop.creatorpromote.com/install-campusboop.ps1 | iex">Copy</button></div>
       </div>
 
 
-
-      <p class="checksum-link"><a href="downloads/CampusBoop-v1.1-Source.zip" download>Download source package →</a> &nbsp;·&nbsp; <a href="downloads/checksums.txt">View SHA-256 checksums →</a></p>
+      <p class="checksum-link"><a href="downloads/CampusBoop-v1.1.1-Source.zip" download>Source package →</a><span>·</span><a href="downloads/checksums.txt">SHA-256 checksums →</a><span>·</span><a href="downloads/CampusBoop-v1.1.1-Windows-Clean-Reset.zip" download>Windows clean-reset helper →</a></p>
     </section>
 
-    <section id="instructions" class="section shell instructions">
-      <div class="section-head"><span>04 // INSTRUCTIONS</span><h2>After installation.</h2><p>The installers also print a short version of these instructions and a clickable link back here when supported by the terminal.</p></div>
+    <section class="section shell" id="instructions">
+      <div class="section-head"><span>03 // INSTRUCTIONS</span><h2>First start is intentionally simple.</h2></div>
+      <div class="step-list">
+        <div><i>1</i><h3>Choose HvA or UvA</h3><p>CampusBoop prepares the matching Print, Top up and Library defaults. All of them remain editable.</p></div>
+        <div><i>2</i><h3>Choose reminder behavior</h3><p>Enable startup, smart VS Code and checkout reminders, then choose the startup delay.</p></div>
+        <div><i>3</i><h3>Add your check-in links</h3><p>Project / Check-in 1 and 2 can share one URL or use separate links. Rename them however you want.</p></div>
+        <div><i>4</i><h3>Use CampusBoop normally</h3><p>Mark yourself checked in only after the real school check-in succeeds. Mark checked out when your school day is finished.</p></div>
+      </div>
+
       <div class="instruction-grid">
-        <article><span>WINDOWS</span><h3>First start</h3><p>The installer opens CampusBoop automatically. Choose HvA/UvA, startup, startup reminder, delay and smart VS Code reminder. Later, open CampusBoop from the Start Menu or run <code>CampusBoop.exe</code>.</p></article>
-        <article><span>LINUX</span><h3>First start</h3><p>The quick installer opens CampusBoop on normal Linux desktops when possible. Otherwise run <code>campusboop</code>. The interface stays local on <code>127.0.0.1</code>.</p></article>
-        <article><span>BOTH</span><h3>School links + Student tools</h3><p>Check-in 1/2 remain editable. The three bottom buttons default to Print, Top up and Library for your selected school, and their names and URLs are editable too.</p></article>
-        <article><span>BOTH</span><h3>Daily workflow</h3><p>Use “Already checked in today” after you have completed the real school check-in. Use “Checked out for today” when you are finished to stop reminders until the next day.</p></article>
-        <article><span>WINDOWS</span><h3>Remove CampusBoop manually</h3><p>Exit CampusBoop first. Search Windows for <strong>CampusBoop</strong> → <strong>Open file location</strong>. If that opens a shortcut, right-click the CampusBoop shortcut → <strong>Open file location</strong> again. Delete the whole CampusBoop app folder, then delete the shortcut from the first location. If startup was enabled, remove the CampusBoop startup shortcut too. Your personal settings remain in <code>%LOCALAPPDATA%\SchoolCheckInHelper</code> unless you choose to delete that folder as well.</p></article>
-        <article><span>LINUX</span><h3>Remove CampusBoop</h3><p><code>campusboop --uninstall</code> removes the app and keeps your local settings. <code>campusboop --purge</code> removes the app and CampusBoop settings.</p></article>
-        <article><span>LINUX NOTE</span><h3>VS Code detection</h3><p>On X11, CampusBoop can use <code>xdotool</code> when available to check whether VS Code is foreground. On Wayland or without it, the fallback checks whether VS Code is running.</p></article>
+        <article><span>WINDOWS</span><h3>Optional login autofill</h3><p>Windows can optionally save your school ID/password locally using Windows DPAPI. Autofill is limited to the selected trusted HvA/UvA login host. MFA remains manual.</p></article>
+        <article><span>LINUX</span><h3>Browser login</h3><p>Linux opens HvA/UvA authentication in your normal browser. CampusBoop does not store your school password on Linux.</p></article>
+        <article><span>WINDOWS</span><h3>Remove manually</h3><p>Exit CampusBoop. Search for CampusBoop in Windows → <strong>Open file location</strong>. If that opens a shortcut, use <strong>Open file location</strong> on the shortcut again, then delete the actual CampusBoop app folder and remove the shortcut. Delete <code>%LOCALAPPDATA%\SchoolCheckInHelper</code> only if you also want to erase settings/login data.</p></article>
+        <article><span>LINUX</span><h3>Remove with one command</h3><p><code>campusboop --uninstall</code> removes the app but keeps settings. <code>campusboop --purge</code> removes both app and local CampusBoop settings.</p></article>
+        <article><span>LINUX</span><h3>VS Code detection</h3><p>On X11, CampusBoop uses <code>xdotool</code> when available for foreground detection. On Wayland or without it, it falls back to checking whether VS Code is running.</p></article>
+        <article><span>TROUBLESHOOTING</span><h3>Windows first-launch protection</h3><p>CampusBoop is an independent unsigned student app, so Windows may show SmartScreen on a direct ZIP launch. The quick installer verifies the exact release hash before installing.</p></article>
       </div>
     </section>
 
-    <section class="section shell privacy">
-      <div class="section-head"><span>05 // PRIVACY & LOGIN</span><h2>Your school account stays yours.</h2></div>
+    <section class="section shell" id="privacy">
+      <div class="section-head"><span>04 // PRIVACY</span><h2>Your school account stays with you.</h2></div>
       <div class="privacy-grid">
-        <div><h3>Windows</h3><p>Personal login is optional. The Windows v1.1 app can store its optional saved login using Windows DPAPI and limits credential autofill to the selected trusted HvA/UvA ADFS host. The trusted helper can also try to skip known school-choice buttons for the built-in student tools. MFA/phone verification remains manual.</p></div>
-        <div><h3>Linux</h3><p>The Linux v1.1 build does not store your HvA/UvA password. School authentication opens in your normal browser, so browser/session security remains with your existing browser setup.</p></div>
-        <div><h3>No automatic submission</h3><p>CampusBoop records “checked in” and “checked out” only as local reminder status. It does not claim that action was registered by the school system.</p></div>
+        <div><h3>Local settings</h3><p>CampusBoop stores reminder settings and local checked-in/checked-out state on your own computer.</p></div>
+        <div><h3>No school database access</h3><p>CampusBoop does not query an HvA/UvA student database or claim that a school check-in succeeded.</p></div>
+        <div><h3>Official pages stay official</h3><p>Print, top-up, library and authentication actions open the configured official web services rather than being processed by this website.</p></div>
       </div>
     </section>
 
-    <section class="final shell"><span>FREE STUDENT PROJECT</span><h2>Less admin friction.<br>More time for the actual work.</h2><a class="button primary" href="#download">Get CampusBoop</a></section>
+    <section class="final shell"><span>VERSION 1.1.1</span><h2>Install once.<br>Let Boop remember the annoying bits.</h2><a class="button primary" href="#download">Get CampusBoop</a></section>
   </main>
 
-  <footer class="shell"><div><strong>CampusBoop</strong><small>Made by a student / ex-student / senior • campusboop.creatorpromote.com</small></div><p>Independent project. Not affiliated with, endorsed by, sponsored by or supported by HvA or UvA.</p></footer>
+  <footer class="shell"><div><strong>CampusBoop</strong><small>campusboop.creatorpromote.com</small></div><p>Independent student project. Not affiliated with, endorsed by, sponsored by or supported by Hogeschool van Amsterdam or Universiteit van Amsterdam.</p></footer>
   <script src="app.js"></script>
-</body></html>
+</body>
+</html>

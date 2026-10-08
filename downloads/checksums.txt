@@ -1,4 +1,5 @@
-8a343ab547498892994f0b69f712702a661cf94fea903c79cbd9a1ed026c1bfb  CampusBoop-v1.1-Windows-x64.zip
-2f6778488413300778ad4bdd184be8fb2751626e2ee0b06388adc75c27f0139a  CampusBoop-v1.1-Linux-x64.zip
-a2551e75360e8eb77fcf8aa5fe5c7cf33ac40a47a91243ac4748089915c7de33  CampusBoop-v1.1-Linux-ARM64.zip
-6d120f469367a7cb17b17f5b01d6806ff2579e4651e76a033d614dbc0147276a  CampusBoop-v1.1-Source.zip
+5b6c23953bbbc4112f1652ca8e98e702b198f22ce0f18cf201517cf9faf096dc  CampusBoop-v1.1.1-Windows-x64.zip
+627bb8748f20d3e31a8d9559e4beae9d4b96e8b48b88298d58ed71ec8d838c56  CampusBoop-v1.1.1-Linux-x64.zip
+30c994f64815fea92dc2ce9e8f10c2be7b6cc48988ac29cbeab6d29ad1c688f8  CampusBoop-v1.1.1-Linux-ARM64.zip
+6735a8b01eceef29ec20966b0de84caca418f7dff06e5ad94eb0818fa462daf7  CampusBoop-v1.1.1-Source.zip
+0c99f018adf1325c82af9c52af13afbb74c94052bd1eac53b74c325a66dd664f  CampusBoop-v1.1.1-Windows-Clean-Reset.zip

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-VERSION="1.1"
-BASE_URL="https://campusboop.creatorpromote.com"
+VERSION="1.1.1"
+BASE_URL="${CAMPUSBOOP_BASE_URL:-https://campusboop.creatorpromote.com}"
 INSTALL_DIR="${HOME}/.local/share/campusboop"
 BIN_DIR="${HOME}/.local/bin"
 COMMAND_PATH="${BIN_DIR}/campusboop"
@@ -12,11 +12,11 @@ CONFIG_ROOT="${XDG_CONFIG_HOME:-${HOME}/.config}/campusboop"
 case "$(uname -m)" in
   x86_64|amd64)
     PACKAGE="CampusBoop-v${VERSION}-Linux-x64.zip"
-    EXPECTED_SHA="2f6778488413300778ad4bdd184be8fb2751626e2ee0b06388adc75c27f0139a"
+    EXPECTED_SHA="627bb8748f20d3e31a8d9559e4beae9d4b96e8b48b88298d58ed71ec8d838c56"
     ;;
   aarch64|arm64)
     PACKAGE="CampusBoop-v${VERSION}-Linux-ARM64.zip"
-    EXPECTED_SHA="a2551e75360e8eb77fcf8aa5fe5c7cf33ac40a47a91243ac4748089915c7de33"
+    EXPECTED_SHA="30c994f64815fea92dc2ce9e8f10c2be7b6cc48988ac29cbeab6d29ad1c688f8"
     ;;
   *)
     echo "CampusBoop: unsupported CPU architecture: $(uname -m)" >&2
@@ -39,8 +39,9 @@ fi
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 ZIP="${TMP}/${PACKAGE}"
+
 echo "CampusBoop v${VERSION} // Linux installer"
-echo "Detected: $(uname -m)"
+echo "Detected CPU: $(uname -m)"
 echo "Downloading ${PACKAGE}..."
 fetch "${BASE_URL}/downloads/${PACKAGE}" "$ZIP"
 
@@ -58,12 +59,12 @@ if [ "$ACTUAL_SHA" != "$EXPECTED_SHA" ]; then
 fi
 echo "SHA-256 verified."
 
-# Ask an already-running copy to exit before replacing its executable.
+# Ask an already-running copy to exit before updating it.
 if [ -f "${CONFIG_ROOT}/port" ] && command -v curl >/dev/null 2>&1; then
   PORT="$(cat "${CONFIG_ROOT}/port" 2>/dev/null || true)"
   if [ -n "$PORT" ]; then
     curl -fsS -X POST -H 'Content-Type: application/json' -d '{"action":"exit"}' "http://127.0.0.1:${PORT}/api/action" >/dev/null 2>&1 || true
-    sleep 0.2
+    sleep 0.3
   fi
 fi
 
@@ -87,7 +88,7 @@ stop_running() {
     p="$(cat "$CONFIG_ROOT/port" 2>/dev/null || true)"
     if [ -n "$p" ]; then
       curl -fsS -X POST -H 'Content-Type: application/json' -d '{"action":"exit"}' "http://127.0.0.1:${p}/api/action" >/dev/null 2>&1 || true
-      sleep 0.2
+      sleep 0.3
     fi
   fi
 }
@@ -98,8 +99,8 @@ case "${1:-}" in
     rm -f "$AUTOSTART" "$APP_DESKTOP"
     rm -rf "$ROOT"
     rm -f "$SELF"
-    echo "CampusBoop removed. Your local settings were kept in: $CONFIG_ROOT"
-    echo "To erase those too, remove that folder manually or reinstall and use: campusboop --purge"
+    echo "CampusBoop removed. Your settings were kept in: $CONFIG_ROOT"
+    echo "For a complete reset/removal, use campusboop --purge before uninstalling next time or remove that settings folder manually."
     exit 0
     ;;
   --purge)
@@ -124,7 +125,7 @@ cat > "$APP_DESKTOP" <<EOF2
 [Desktop Entry]
 Type=Application
 Name=CampusBoop
-Comment=Student check-in, commit and break reminder
+Comment=Student check-in, commit, break and checkout reminder
 Exec=${COMMAND_PATH}
 Terminal=false
 Categories=Education;Utility;
@@ -148,12 +149,11 @@ printf '  Full remove: campusboop --purge\n\n'
 printf 'Instructions: %s/#instructions\n' "$BASE_URL"
 printf '\033]8;;%s/#instructions\033\\Open CampusBoop instructions\033]8;;\033\\\n' "$BASE_URL" 2>/dev/null || true
 if [[ ":${PATH}:" != *":${BIN_DIR}:"* ]]; then
-  printf '\nNote: ~/.local/bin was added to ~/.profile. Open a new terminal before using the short command.\n'
+  printf '\n~/.local/bin was added to ~/.profile. Open a new terminal before using the short command.\n'
   printf 'You can start it right now with: %s\n' "$COMMAND_PATH"
 fi
 
-# First install should feel like an app install, not only a terminal command.
-# Open the first-run setup automatically on normal graphical Linux sessions.
+# On normal graphical sessions, open first-run setup after installation/update.
 if [ -n "${DISPLAY:-}${WAYLAND_DISPLAY:-}" ]; then
   nohup "$COMMAND_PATH" >/dev/null 2>&1 &
 fi
